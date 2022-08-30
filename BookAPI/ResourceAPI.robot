@@ -5,6 +5,11 @@ Library    Collections
 
 *** Variables ***
 ${URL_API}    https://fakerestapi.azurewebsites.net/api/v1/
+&{BOOK_15}    id=15
+...           title=Book 15
+...           description=Lorem lorem lorem. Lorem lorem lorem. Lorem lorem lorem.\n
+...           pageCount=1500
+...           excerpt=Lorem lorem lorem. Lorem lorem lorem. Lorem lorem lorem.\nLorem lorem lorem. Lorem lorem lorem. Lorem lorem lorem.\nLorem lorem lorem. Lorem lorem lorem. Lorem lorem lorem.\nLorem lorem lorem. Lorem lorem lorem. Lorem lorem lorem.\nLorem lorem lorem. Lorem lorem lorem. Lorem lorem lorem.\n
 
 *** Keywords ***
 Conectar a minha API
@@ -32,3 +37,11 @@ Conferir o reason
 
 Conferir se retorna uma lista com "${QTD_LIVROS}" livros
     Length Should Be    ${RESPOSTA.json()}    200
+
+Conferir se retorna todos os dados do livro 15
+    Dictionary Should Contain Item    ${RESPOSTA.json()}    id             ${BOOK_15.id}
+    Dictionary Should Contain Item    ${RESPOSTA.json()}    title          ${BOOK_15.title}
+    Dictionary Should Contain Item    ${RESPOSTA.json()}    description    ${BOOK_15.description}
+    Dictionary Should Contain Item    ${RESPOSTA.json()}    pageCount      ${BOOK_15.pageCount}
+    Dictionary Should Contain Item    ${RESPOSTA.json()}    excerpt        ${BOOK_15.excerpt}
+    Should Not Be Empty    ${RESPOSTA.json()["publishDate"]}
